@@ -15,6 +15,7 @@ La aplicación organiza su interfaz en dos columnas, de modo que la parte izquie
 *Mecanismo de cierre animado.
 
 <h2>Flujo general del programa</h2>
+
 1. Inicio
 Al ejecutarse el archivo, se crea la ventana principal y se configuran todos los estilos.
 Se cargan o inicializan los datos almacenados en contrasenias.json.
