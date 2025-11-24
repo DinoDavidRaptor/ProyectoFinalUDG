@@ -4,50 +4,36 @@ Este programa es una aplicación de escritorio creada con Python y Tkinter que f
 
 La aplicación organiza su interfaz en dos columnas, de modo que la parte izquierda contiene toda la funcionalidad principal y la derecha muestra arte ASCII animado que cambia según la acción realizada.
 
-Características principales
-
-Interfaz gráfica estilo terminal.
-
-Animación de arte ASCII en tiempo real.
-
-Múltiples herramientas de gestión de contraseñas.
-
-Sistema de almacenamiento basado en JSON.
-
-Consola integrada que registra cada acción.
-
-Barra de progreso para tareas largas.
-
-Función humorística llamada “Hackear SIIAU”.
-
-Mecanismo de cierre animado.
+*Características principales
+*Interfaz gráfica estilo terminal.
+*Animación de arte ASCII en tiempo real.
+*Múltiples herramientas de gestión de contraseñas.
+*Sistema de almacenamiento basado en JSON.
+*Consola integrada que registra cada acción.
+*Barra de progreso para tareas largas.
+*Función humorística llamada “Hackear SIIAU”.
+*Mecanismo de cierre animado.
 
 Flujo general del programa
 1. Inicio
-
 Al ejecutarse el archivo, se crea la ventana principal y se configuran todos los estilos.
 Se cargan o inicializan los datos almacenados en contrasenias.json.
 
 2. Animación inicial
-
 El programa muestra una animación ASCII cíclica usando un sistema de actualización programada mediante la función after de Tkinter.
 
 3. Menú de funciones
-
 Se muestran botones numerados que representan las acciones del sistema.
 El usuario interactúa con ellos y cada uno ejecuta una tarea distinta.
 
 4. Registro en consola
-
 Cada proceso escribe mensajes en la consola interna para dar retroalimentación detallada.
 
 5. Guardado de datos
-
 El sistema guarda cualquier cambio realizado en un archivo JSON.
 Antes y después del guardado, se registran múltiples pasos para monitorear el proceso.
 
 6. Cierre del sistema
-
 La aplicación muestra arte ASCII de despedida, simula limpieza de recursos y cierra la ventana después de unos segundos.
 
 Funciones incluidas en el código
