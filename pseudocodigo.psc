@@ -1,12 +1,12 @@
 // ==========================================
-// GESTOR DE CONTRASEÑAS CON HASH SHA-256
-// Sistema de Gestión de Contraseñas con Interfaz Gráfica
-// Pseudocódigo para PSeInt
+// GESTOR DE CONTRASENAS CON HASH SHA-256
+// Sistema de Gestion de Contrasenas con Interfaz Grafica
+// Pseudocodigo para PSeInt
 // ==========================================
 
 Algoritmo GestorContrasenasProyectoFinal
 	
-	// ========== DECLARACIÓN DE VARIABLES GLOBALES ==========
+	// ========== DECLARACION DE VARIABLES GLOBALES ==========
 	Definir Contrasenias, Hashes Como Caracter
 	Definir Caracteres, Letras Como Caracter
 	Definir totalContrasenias, totalHashes Como Entero
@@ -17,7 +17,7 @@ Algoritmo GestorContrasenasProyectoFinal
 	Caracteres <- ".,!@#$%^&*()_+{}[]|\:;/?<>-_"
 	Letras <- "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	
-	// Arreglos para almacenar contraseñas y hashes
+	// Arreglos para almacenar contrasenas y hashes
 	Dimension Contrasenias[200, 2]  // [indice][0=clave, 1=valor]
 	Dimension Hashes[200, 2]        // [indice][0=clave, 1=hash]
 	totalContrasenias <- 0
@@ -31,7 +31,7 @@ Algoritmo GestorContrasenasProyectoFinal
 	// Cargar datos desde archivos JSON simulados
 	CargarDatos(Contrasenias, Hashes, totalContrasenias, totalHashes)
 	
-	// ========== BUCLE PRINCIPAL DEL MENÚ ==========
+	// ========== BUCLE PRINCIPAL DEL MENU ==========
 	Mientras continuar Hacer
 		MostrarMenu()
 		Leer opcion
@@ -41,19 +41,19 @@ Algoritmo GestorContrasenasProyectoFinal
 				// Verificar archivos JSON
 				VerificarArchivosJSON(totalContrasenias, totalHashes)
 			2:
-				// Buscar contraseña por hash
+				// Buscar contrasena por hash
 				BuscarContrasenia(Contrasenias, Hashes, totalContrasenias, totalHashes)
 			3:
-				// Hashear todas las contraseñas
+				// Hashear todas las contrasenas
 				HashearTodo(Contrasenias, Hashes, totalContrasenias, totalHashes)
 			4:
-				// Generar nuevas contraseñas seguras
+				// Generar nuevas contrasenas seguras
 				GenerarContrasenias(Contrasenias, totalContrasenias, Letras, Caracteres)
 			5:
-				// Verificar seguridad de una contraseña
+				// Verificar seguridad de una contrasena
 				VerificarSeguridad(Caracteres, Letras)
 			6:
-				// Eliminar contraseñas inseguras
+				// Eliminar contrasenas inseguras
 				EliminarInseguras(Contrasenias, totalContrasenias, Caracteres, Letras)
 			7:
 				// Easter egg: Hackear SIIAU
@@ -62,7 +62,7 @@ Algoritmo GestorContrasenasProyectoFinal
 				// Salir del programa
 				Salir(continuar)
 			De Otro Modo:
-				Escribir "ERROR: Opción no válida"
+				Escribir "ERROR: Opcion no valida"
 		FinSegun
 		
 		Si continuar Entonces
@@ -73,7 +73,7 @@ Algoritmo GestorContrasenasProyectoFinal
 		FinSi
 	FinMientras
 	
-	Escribir "Programa finalizado. ¡Hasta pronto!"
+	Escribir "Programa finalizado. Hasta pronto!"
 	
 FinAlgoritmo
 
@@ -130,7 +130,7 @@ SubProceso VerificarArchivosJSON(totalContrasenias, totalHashes)
 	tiempoInicio <- Aleatorio(0, 50) / 10.0
 	
 	Escribir "======================================================================"
-	Escribir "VERIFICACIÓN DE ARCHIVO DE BASE DE DATOS"
+	Escribir "VERIFICACION DE ARCHIVO DE BASE DE DATOS"
 	Escribir "======================================================================"
 	Escribir "ARCHIVO A VERIFICAR: contrasenias.json y hashes.json"
 	Escribir "INICIANDO ESCANEO DEL SISTEMA DE ARCHIVOS..."
@@ -152,8 +152,8 @@ SubProceso VerificarArchivosJSON(totalContrasenias, totalHashes)
 	tiempoTranscurrido <- tiempoFin - tiempoInicio
 	
 	Escribir "======================================================================"
-	Escribir "TIEMPO DE EJECUCIÓN: ", tiempoTranscurrido, " segundos"
-	Escribir "VEREDICTO: VERIFICACIÓN COMPLETADA"
+	Escribir "TIEMPO DE EJECUCION: ", tiempoTranscurrido, " segundos"
+	Escribir "VEREDICTO: VERIFICACION COMPLETADA"
 	Escribir "======================================================================"
 FinSubProceso
 
@@ -171,14 +171,14 @@ SubProceso BuscarContrasenia(Contrasenias, Hashes, totalContrasenias, totalHashe
 	Escribir "======================================================================"
 	Escribir "INICIANDO BUSQUEDA DE CONTRASENA EN BASE DE DATOS"
 	Escribir "======================================================================"
-	Escribir "CONTRASEÑA A BUSCAR: ", contrasenia
+	Escribir "CONTRASENA A BUSCAR: ", contrasenia
 	Escribir "LONGITUD: ", Longitud(contrasenia), " caracteres"
-	Escribir "GENERANDO HASH SHA-256 PARA COMPARACIÓN..."
+	Escribir "GENERANDO HASH SHA-256 PARA COMPARACION..."
 	
 	hashGenerado <- GenerarHashSHA256(contrasenia)
 	Escribir "HASH GENERADO: ", hashGenerado
 	Escribir ""
-	Escribir "BUSCANDO EN ", totalContrasenias, " CONTRASEÑAS Y ", totalHashes, " HASHES..."
+	Escribir "BUSCANDO EN ", totalContrasenias, " CONTRASENAS Y ", totalHashes, " HASHES..."
 	
 	encontradaContra <- Falso
 	encontradaHash <- Falso
@@ -210,10 +210,10 @@ SubProceso BuscarContrasenia(Contrasenias, Hashes, totalContrasenias, totalHashe
 		Escribir "RESULTADO: CONTRASENA ENCONTRADA"
 		Escribir "KEY: ", Contrasenias[keyEncontrada, 1]
 		Si encontradaContra Entonces
-			Escribir "UBICACIÓN: Base de datos de contraseñas (texto plano)"
+			Escribir "UBICACION: Base de datos de contrasenas (texto plano)"
 		FinSi
 		Si encontradaHash Entonces
-			Escribir "UBICACIÓN: Base de datos de hashes (SHA-256)"
+			Escribir "UBICACION: Base de datos de hashes (SHA-256)"
 		FinSi
 		Escribir "HASH: ", hashGenerado
 	SiNo
@@ -222,7 +222,7 @@ SubProceso BuscarContrasenia(Contrasenias, Hashes, totalContrasenias, totalHashe
 		Escribir "HASH BUSCADO: ", hashGenerado
 		Escribir "SUGERENCIA: La contrasena puede ser nueva o nunca fue agregada"
 	FinSi
-	Escribir "TIEMPO DE EJECUCIÓN: ", tiempoTranscurrido, " segundos"
+	Escribir "TIEMPO DE EJECUCION: ", tiempoTranscurrido, " segundos"
 	Escribir "======================================================================"
 FinSubProceso
 
@@ -236,7 +236,7 @@ SubProceso HashearTodo(Contrasenias, Hashes Por Referencia, totalContrasenias, t
 	Escribir "======================================================================"
 	Escribir "INICIANDO PROCESO DE HASHEO MASIVO CON SHA-256"
 	Escribir "======================================================================"
-	Escribir "TOTAL DE CONTRASEÑAS EN DB: ", totalContrasenias
+	Escribir "TOTAL DE CONTRASENAS EN DB: ", totalContrasenias
 	Escribir "ALGORITMO: SHA-256 (Secure Hash Algorithm 256-bit)"
 	Escribir "ENCODING: UTF-8"
 	Escribir "OUTPUT: Hexadecimal (64 caracteres)"
@@ -248,8 +248,8 @@ SubProceso HashearTodo(Contrasenias, Hashes Por Referencia, totalContrasenias, t
 		Escribir ""
 		Escribir ">>> PROCESANDO: ", Contrasenias[i, 1]
 		Escribir "    Valor actual: ", Contrasenias[i, 2]
-		Escribir "    STATUS: Contraseña en texto plano"
-		Escribir "    ACCIÓN: Aplicando hash SHA-256..."
+		Escribir "    STATUS: Contrasena en texto plano"
+		Escribir "    ACCION: Aplicando hash SHA-256..."
 		
 		hashGenerado <- GenerarHashSHA256(Contrasenias[i, 2])
 		totalHashes <- totalHashes + 1
@@ -279,7 +279,7 @@ SubProceso HashearTodo(Contrasenias, Hashes Por Referencia, totalContrasenias, t
 	Escribir "CONTRASENAS GUARDADAS CORRECTAMENTE EN contrasenias.json"
 	Escribir "HASHES GUARDADOS CORRECTAMENTE EN hashes.json"
 	Escribir "PROCESO COMPLETADO: Todas las contrasenas han sido hasheadas."
-	Escribir "TIEMPO DE EJECUCIÓN: ", tiempoTranscurrido, " segundos"
+	Escribir "TIEMPO DE EJECUCION: ", tiempoTranscurrido, " segundos"
 	Escribir "======================================================================"
 FinSubProceso
 
@@ -297,24 +297,24 @@ SubProceso GenerarContrasenias(Contrasenias Por Referencia, totalContrasenias Po
 	Escribir "======================================================================"
 	Escribir "INICIANDO GENERADOR DE CONTRASENAS SEGURAS"
 	Escribir "======================================================================"
-	Escribir "CANTIDAD SOLICITADA: ", cantidad, " contraseñas"
-	Escribir "NIVEL DE SEGURIDAD: MÁXIMO"
-	Escribir "LONGITUD MÍNIMA: 9 caracteres"
-	Escribir "REQUISITOS: Mayúsculas, Minúsculas, Números, Símbolos"
+	Escribir "CANTIDAD SOLICITADA: ", cantidad, " contrasenas"
+	Escribir "NIVEL DE SEGURIDAD: MAXIMO"
+	Escribir "LONGITUD MINIMA: 9 caracteres"
+	Escribir "REQUISITOS: Mayusculas, Minusculas, Numeros, Simbolos"
 	Escribir "======================================================================"
 	
 	Para i <- 1 Hasta cantidad Hacer
 		Escribir ""
-		Escribir ">>> GENERANDO CONTRASEÑA #", i, " de ", cantidad
+		Escribir ">>> GENERANDO CONTRASENA #", i, " de ", cantidad
 		Escribir "INICIALIZANDO GENERADOR ALEATORIO..."
-		Escribir "MEZCLANDO CARACTERES: A-Z, a-z, 0-9, símbolos..."
+		Escribir "MEZCLANDO CARACTERES: A-Z, a-z, 0-9, simbolos..."
 		
 		nuevaContrasenia <- GenerarContraseniaSegura(Letras, Caracteres)
 		totalContrasenias <- totalContrasenias + 1
 		Contrasenias[totalContrasenias, 1] <- Concatenar("pass_", ConvertirATexto(i))
 		Contrasenias[totalContrasenias, 2] <- nuevaContrasenia
 		
-		Escribir "✓ CONTRASEÑA GENERADA: ", nuevaContrasenia
+		Escribir "CONTRASENA GENERADA: ", nuevaContrasenia
 		Escribir "  - Longitud: ", Longitud(nuevaContrasenia), " caracteres"
 		Escribir "  - Mayusculas: ", ContarMayusculas(nuevaContrasenia)
 		Escribir "  - Minusculas: ", ContarMinusculas(nuevaContrasenia)
@@ -338,13 +338,13 @@ SubProceso GenerarContrasenias(Contrasenias Por Referencia, totalContrasenias Po
 	Escribir "CONTRASENAS GUARDADAS CORRECTAMENTE EN contrasenias.json"
 	Escribir "HASHES GUARDADOS CORRECTAMENTE EN hashes.json"
 	Escribir cantidad, " CONTRASENAS GENERADAS Y ALMACENADAS"
-	Escribir "TIEMPO DE EJECUCIÓN: ", tiempoTranscurrido, " segundos"
+	Escribir "TIEMPO DE EJECUCION: ", tiempoTranscurrido, " segundos"
 	Escribir "======================================================================"
 FinSubProceso
 
 Funcion contrasenia <- GenerarContraseniaSegura(Letras, Caracteres)
 	Definir contrasenia Como Caracter
-	Definir longitud, i, indice Como Entero
+	Definir longitud, i, indice, largo Como Entero
 	Definir todoJunto Como Caracter
 	Definir valida Como Logico
 	
@@ -355,8 +355,9 @@ Funcion contrasenia <- GenerarContraseniaSegura(Letras, Caracteres)
 	
 	Mientras NO valida Hacer
 		contrasenia <- ""
+		largo <- Longitud(todoJunto)
 		Para i <- 1 Hasta longitud Hacer
-			indice <- Aleatorio(1, Longitud(todoJunto))
+			indice <- Aleatorio(1, largo)
 			contrasenia <- Concatenar(contrasenia, Subcadena(todoJunto, indice, indice))
 		FinPara
 		
@@ -559,28 +560,28 @@ SubProceso HackearSIIAU
 	Escribir "INICIANDO ATAQUE AL SISTEMA SIIAU..."
 	Escribir "======================================================================"
 	Escribir "ESCANEANDO PUERTOS..."
-	Escribir "  • Puerto 80: ABIERTO"
-	Escribir "  • Puerto 443: ABIERTO"
-	Escribir "  • Puerto 8080: ABIERTO"
+	Escribir "  - Puerto 80: ABIERTO"
+	Escribir "  - Puerto 443: ABIERTO"
+	Escribir "  - Puerto 8080: ABIERTO"
 	Escribir ""
-	Escribir "INTENTANDO BYPASS DE AUTENTICACIÓN..."
-	Escribir "  • Método 1: SQL Injection... FALLÓ"
-	Escribir "  • Método 2: XSS Attack... FALLÓ"
-	Escribir "  • Método 3: Buffer Overflow... EXITO"
+	Escribir "INTENTANDO BYPASS DE AUTENTICACION..."
+	Escribir "  - Metodo 1: SQL Injection... FALLO"
+	Escribir "  - Metodo 2: XSS Attack... FALLO"
+	Escribir "  - Metodo 3: Buffer Overflow... EXITO"
 	Escribir ""
 	Escribir "EJECUTANDO EXPLOIT SQL INJECTION..."
-	Escribir "  • SELECT * FROM usuarios WHERE..."
-	Escribir "  • ' OR '1'='1' --"
+	Escribir "  - SELECT * FROM usuarios WHERE..."
+	Escribir "  - OR 1=1 --"
 	Escribir ""
 	Escribir "ACCEDIENDO A BASE DE DATOS..."
 	Escribir "======================================================================"
 	Escribir "======================================================================"
 	Escribir ""
-	Escribir "CALIFICACION EDITADA CON ÉXITO A 0.0"
+	Escribir "CALIFICACION EDITADA CON EXITO A 0.0"
 	Escribir "======================================================================"
 	Escribir ""
-	Escribir "¿Quieres cambiar libremente la calificacion?"
-	Escribir "Depositame 0.01 BTC a la siguiente dirección:"
+	Escribir "Quieres cambiar libremente la calificacion?"
+	Escribir "Depositame 0.01 BTC a la siguiente direccion:"
 	Escribir "1HckjUpRGcrrRAtFaaCAUaGjsPx9oYmLaZ"
 	Escribir ""
 	Esperar 3 Segundos
