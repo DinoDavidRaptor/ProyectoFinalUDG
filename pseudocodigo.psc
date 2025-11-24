@@ -160,19 +160,29 @@ FinSubProceso
 SubProceso BuscarContrasenia(Contrasenias, Hashes, totalContrasenias, totalHashes)
 	Definir contrasenia, hashGenerado Como Caracter
 	Definir encontradaContra, encontradaHash Como Logico
-	Definir i, keyEncontrada Como Entero
+	Definir i, keyEncontrada, largoPass Como Entero
 	Definir tiempoInicio, tiempoFin, tiempoTranscurrido Como Real
 	
 	Escribir Sin Saltar "Ingrese la contrasena a buscar: "
 	Leer contrasenia
 	
 	tiempoInicio <- Aleatorio(0, 50) / 10.0
+	largoPass <- 0
+	
+	// Calcular longitud manualmente
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(contrasenia, i, i) <> "" Entonces
+			largoPass <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
 	
 	Escribir "======================================================================"
 	Escribir "INICIANDO BUSQUEDA DE CONTRASENA EN BASE DE DATOS"
 	Escribir "======================================================================"
 	Escribir "CONTRASENA A BUSCAR: ", contrasenia
-	Escribir "LONGITUD: ", Longitud(contrasenia), " caracteres"
+	Escribir "LONGITUD: ", largoPass, " caracteres"
 	Escribir "GENERANDO HASH SHA-256 PARA COMPARACION..."
 	
 	hashGenerado <- GenerarHashSHA256(contrasenia)
@@ -314,8 +324,17 @@ SubProceso GenerarContrasenias(Contrasenias Por Referencia, totalContrasenias Po
 		Contrasenias[totalContrasenias, 1] <- Concatenar("pass_", ConvertirATexto(i))
 		Contrasenias[totalContrasenias, 2] <- nuevaContrasenia
 		
+		largoPass <- 0
+		Para i <- 1 Hasta 50 Hacer
+			Si Subcadena(nuevaContrasenia, i, i) <> "" Entonces
+				largoPass <- i
+			SiNo
+				i <- 51
+			FinSi
+		FinPara
+		
 		Escribir "CONTRASENA GENERADA: ", nuevaContrasenia
-		Escribir "  - Longitud: ", Longitud(nuevaContrasenia), " caracteres"
+		Escribir "  - Longitud: ", largoPass, " caracteres"
 		Escribir "  - Mayusculas: ", ContarMayusculas(nuevaContrasenia)
 		Escribir "  - Minusculas: ", ContarMinusculas(nuevaContrasenia)
 		Escribir "  - Numeros: ", ContarNumeros(nuevaContrasenia)
@@ -375,17 +394,28 @@ SubProceso VerificarSeguridad(Caracteres, Letras)
 	Definir contrasenia Como Caracter
 	Definir tieneMinus, tieneMayus, tieneNum, tieneSimb Como Logico
 	Definir tiempoInicio, tiempoFin, tiempoTranscurrido Como Real
+	Definir largoPass, i Como Entero
 	
 	Escribir Sin Saltar "Ingrese contrasena a analizar: "
 	Leer contrasenia
 	
 	tiempoInicio <- Aleatorio(0, 50) / 10.0
+	largoPass <- 0
+	
+	// Calcular longitud manualmente
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(contrasenia, i, i) <> "" Entonces
+			largoPass <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
 	
 	Escribir "======================================================================"
 	Escribir "ANALISIS DE SEGURIDAD DE CONTRASENA"
 	Escribir "======================================================================"
 	Escribir "CONTRASENA INGRESADA: ", contrasenia
-	Escribir "LONGITUD: ", Longitud(contrasenia), " caracteres"
+	Escribir "LONGITUD: ", largoPass, " caracteres"
 	Escribir ""
 	Escribir "CRITERIOS DE SEGURIDAD:"
 	
@@ -394,10 +424,10 @@ SubProceso VerificarSeguridad(Caracteres, Letras)
 	tieneNum <- TieneNumeros(contrasenia)
 	tieneSimb <- TieneSimbolos(contrasenia, Caracteres)
 	
-	Si Longitud(contrasenia) >= 9 Entonces
-		Escribir "  Longitud >= 9: SI (actual: ", Longitud(contrasenia), ")"
+	Si largoPass >= 9 Entonces
+		Escribir "  Longitud >= 9: SI (actual: ", largoPass, ")"
 	SiNo
-		Escribir "  Longitud >= 9: NO (actual: ", Longitud(contrasenia), ")"
+		Escribir "  Longitud >= 9: NO (actual: ", largoPass, ")"
 	FinSi
 	
 	Si tieneMinus Entonces
@@ -428,7 +458,7 @@ SubProceso VerificarSeguridad(Caracteres, Letras)
 	tiempoFin <- Aleatorio(0, 50) / 10.0
 	tiempoTranscurrido <- tiempoFin - tiempoInicio
 	
-	Si Longitud(contrasenia) >= 9 Y tieneMinus Y tieneMayus Y tieneNum Y tieneSimb Entonces
+	Si largoPass >= 9 Y tieneMinus Y tieneMayus Y tieneNum Y tieneSimb Entonces
 		Escribir "======================================================================"
 		Escribir "VEREDICTO: CONTRASENA SEGURA"
 		Escribir "TIEMPO DE EJECUCION: ", tiempoTranscurrido, " segundos"
@@ -438,7 +468,7 @@ SubProceso VerificarSeguridad(Caracteres, Letras)
 		Escribir "VEREDICTO: CONTRASENA INSEGURA (DEBIL)"
 		Escribir "======================================================================"
 		Escribir "RECOMENDACIONES:"
-		Si Longitud(contrasenia) < 9 Entonces
+		Si largoPass < 9 Entonces
 			Escribir "  - Aumentar longitud a minimo 9 caracteres"
 		FinSi
 		Si NO tieneMinus Entonces
@@ -458,7 +488,7 @@ SubProceso VerificarSeguridad(Caracteres, Letras)
 FinSubProceso
 
 SubProceso EliminarInseguras(Contrasenias Por Referencia, totalContrasenias Por Referencia, Caracteres, Letras)
-	Definir i, eliminadas, nuevoTotal Como Entero
+	Definir i, j, eliminadas, nuevoTotal, largoPass Como Entero
 	Definir esSegura Como Logico
 	Definir tiempoInicio, tiempoFin, tiempoTranscurrido Como Real
 	Definir ContraseniasTemporal Como Caracter
@@ -482,7 +512,17 @@ SubProceso EliminarInseguras(Contrasenias Por Referencia, totalContrasenias Por 
 	Para i <- 1 Hasta totalContrasenias Hacer
 		Escribir ""
 		Escribir ">>> ANALIZANDO: ", Contrasenias[i, 1]
-		Escribir "    Longitud: ", Longitud(Contrasenias[i, 2]), " caracteres"
+		
+		largoPass <- 0
+		Para j <- 1 Hasta 200 Hacer
+			Si Subcadena(Contrasenias[i, 2], j, j) <> "" Entonces
+				largoPass <- j
+			SiNo
+				j <- 201
+			FinSi
+		FinPara
+		
+		Escribir "    Longitud: ", largoPass, " caracteres"
 		Escribir "    Valor: ", Contrasenias[i, 2]
 		
 		esSegura <- ValidarContrasenia(Contrasenias[i, 2], Caracteres, Letras)
@@ -621,14 +661,35 @@ FinFuncion
 
 Funcion resultado <- ValidarContrasenia(contrasenia, Caracteres, Letras)
 	Definir resultado Como Logico
-	resultado <- (Longitud(contrasenia) >= 9) Y TieneMinusculas(contrasenia) Y TieneMayusculas(contrasenia) Y TieneNumeros(contrasenia) Y TieneSimbolos(contrasenia, Caracteres)
+	Definir largoPass, i Como Entero
+	
+	largoPass <- 0
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(contrasenia, i, i) <> "" Entonces
+			largoPass <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
+	resultado <- (largoPass >= 9) Y TieneMinusculas(contrasenia) Y TieneMayusculas(contrasenia) Y TieneNumeros(contrasenia) Y TieneSimbolos(contrasenia, Caracteres)
 FinFuncion
 
 Funcion resultado <- TieneMinusculas(texto)
 	Definir resultado Como Logico
-	Definir i Como Entero
+	Definir i, largoTexto Como Entero
 	resultado <- Falso
-	Para i <- 1 Hasta Longitud(texto) Hacer
+	largoTexto <- 0
+	
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(texto, i, i) <> "" Entonces
+			largoTexto <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
+	Para i <- 1 Hasta largoTexto Hacer
 		Si Subcadena(texto, i, i) >= "a" Y Subcadena(texto, i, i) <= "z" Entonces
 			resultado <- Verdadero
 		FinSi
@@ -637,9 +698,19 @@ FinFuncion
 
 Funcion resultado <- TieneMayusculas(texto)
 	Definir resultado Como Logico
-	Definir i Como Entero
+	Definir i, largoTexto Como Entero
 	resultado <- Falso
-	Para i <- 1 Hasta Longitud(texto) Hacer
+	largoTexto <- 0
+	
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(texto, i, i) <> "" Entonces
+			largoTexto <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
+	Para i <- 1 Hasta largoTexto Hacer
 		Si Subcadena(texto, i, i) >= "A" Y Subcadena(texto, i, i) <= "Z" Entonces
 			resultado <- Verdadero
 		FinSi
@@ -648,9 +719,19 @@ FinFuncion
 
 Funcion resultado <- TieneNumeros(texto)
 	Definir resultado Como Logico
-	Definir i Como Entero
+	Definir i, largoTexto Como Entero
 	resultado <- Falso
-	Para i <- 1 Hasta Longitud(texto) Hacer
+	largoTexto <- 0
+	
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(texto, i, i) <> "" Entonces
+			largoTexto <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
+	Para i <- 1 Hasta largoTexto Hacer
 		Si Subcadena(texto, i, i) >= "0" Y Subcadena(texto, i, i) <= "9" Entonces
 			resultado <- Verdadero
 		FinSi
@@ -659,10 +740,21 @@ FinFuncion
 
 Funcion resultado <- TieneSimbolos(texto, Caracteres)
 	Definir resultado Como Logico
-	Definir i, j Como Entero
+	Definir i, j, largoTexto, largoCarac Como Entero
 	resultado <- Falso
-	Para i <- 1 Hasta Longitud(texto) Hacer
-		Para j <- 1 Hasta Longitud(Caracteres) Hacer
+	largoTexto <- 0
+	largoCarac <- 28
+	
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(texto, i, i) <> "" Entonces
+			largoTexto <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
+	Para i <- 1 Hasta largoTexto Hacer
+		Para j <- 1 Hasta largoCarac Hacer
 			Si Subcadena(texto, i, i) = Subcadena(Caracteres, j, j) Entonces
 				resultado <- Verdadero
 			FinSi
@@ -671,9 +763,19 @@ Funcion resultado <- TieneSimbolos(texto, Caracteres)
 FinFuncion
 
 Funcion cantidad <- ContarMinusculas(texto)
-	Definir cantidad, i Como Entero
+	Definir cantidad, i, largoTexto Como Entero
 	cantidad <- 0
-	Para i <- 1 Hasta Longitud(texto) Hacer
+	largoTexto <- 0
+	
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(texto, i, i) <> "" Entonces
+			largoTexto <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
+	Para i <- 1 Hasta largoTexto Hacer
 		Si Subcadena(texto, i, i) >= "a" Y Subcadena(texto, i, i) <= "z" Entonces
 			cantidad <- cantidad + 1
 		FinSi
@@ -681,9 +783,19 @@ Funcion cantidad <- ContarMinusculas(texto)
 FinFuncion
 
 Funcion cantidad <- ContarMayusculas(texto)
-	Definir cantidad, i Como Entero
+	Definir cantidad, i, largoTexto Como Entero
 	cantidad <- 0
-	Para i <- 1 Hasta Longitud(texto) Hacer
+	largoTexto <- 0
+	
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(texto, i, i) <> "" Entonces
+			largoTexto <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
+	Para i <- 1 Hasta largoTexto Hacer
 		Si Subcadena(texto, i, i) >= "A" Y Subcadena(texto, i, i) <= "Z" Entonces
 			cantidad <- cantidad + 1
 		FinSi
@@ -691,9 +803,19 @@ Funcion cantidad <- ContarMayusculas(texto)
 FinFuncion
 
 Funcion cantidad <- ContarNumeros(texto)
-	Definir cantidad, i Como Entero
+	Definir cantidad, i, largoTexto Como Entero
 	cantidad <- 0
-	Para i <- 1 Hasta Longitud(texto) Hacer
+	largoTexto <- 0
+	
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(texto, i, i) <> "" Entonces
+			largoTexto <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
+	Para i <- 1 Hasta largoTexto Hacer
 		Si Subcadena(texto, i, i) >= "0" Y Subcadena(texto, i, i) <= "9" Entonces
 			cantidad <- cantidad + 1
 		FinSi
@@ -701,10 +823,21 @@ Funcion cantidad <- ContarNumeros(texto)
 FinFuncion
 
 Funcion cantidad <- ContarSimbolos(texto, Caracteres)
-	Definir cantidad, i, j Como Entero
+	Definir cantidad, i, j, largoTexto, largoCarac Como Entero
 	cantidad <- 0
-	Para i <- 1 Hasta Longitud(texto) Hacer
-		Para j <- 1 Hasta Longitud(Caracteres) Hacer
+	largoTexto <- 0
+	largoCarac <- 28
+	
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(texto, i, i) <> "" Entonces
+			largoTexto <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
+	Para i <- 1 Hasta largoTexto Hacer
+		Para j <- 1 Hasta largoCarac Hacer
 			Si Subcadena(texto, i, i) = Subcadena(Caracteres, j, j) Entonces
 				cantidad <- cantidad + 1
 			FinSi
