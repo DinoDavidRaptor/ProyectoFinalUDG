@@ -10,8 +10,14 @@ from tkinter import ttk, scrolledtext, simpledialog, messagebox
 
 # Variables Globales
 Contrasenias = {}
+Hashes = {}
 Caracteres = r".,!@#$%^&*()_+{}[]|\:;/?<>-_"
 Letras = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+# Obtener la ruta del directorio donde está el script
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CONTRASENIAS_FILE = os.path.join(SCRIPT_DIR, "contrasenias.json")
+HASHES_FILE = os.path.join(SCRIPT_DIR, "hashes.json")
 
 class ProyectoFinal:
     def __init__(self, root):
@@ -52,7 +58,7 @@ class ProyectoFinal:
         self.left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 10))
 
         # Columna Derecha (Arte ASCII)
-        self.right_frame = tk.Frame(self.main_frame, bg="black", width=900)
+        self.right_frame = tk.Frame(self.main_frame, bg="black", width=900, height=8000)
         self.right_frame.pack_propagate(False)
         self.right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, padx=(10, 0))
 
@@ -95,7 +101,7 @@ class ProyectoFinal:
         self.progress.pack(pady=10, fill=tk.X, padx=20)
 
         # --- Contenido Derecha (Arte ASCII) ---
-        self.ascii_label = tk.Label(self.right_frame, text="", bg="black", fg="#00FF00", font=("Courier", 10), justify=tk.LEFT, anchor="n")
+        self.ascii_label = tk.Label(self.right_frame, text="", bg="black", fg="#00FF00", font=("Courier", 10), justify=tk.LEFT, anchor="center")
         self.ascii_label.pack(fill=tk.BOTH, expand=True)
 
         # Datos de Arte ASCII
@@ -306,45 +312,72 @@ class ProyectoFinal:
         self.root.update_idletasks()
 
     def cargar_datos(self):
-        global Contrasenias
-        if os.path.exists("contrasenias.json"):
+        global Contrasenias, Hashes
+        # Cargar contraseñas
+        if os.path.exists(CONTRASENIAS_FILE):
             try:
-                with open("contrasenias.json", "r") as archivo:
+                with open(CONTRASENIAS_FILE, "r") as archivo:
                     Contrasenias = json.load(archivo)
-                self.log("Base de datos cargada correctamente.")
+                self.log("Base de datos de contraseñas cargada correctamente.")
             except json.JSONDecodeError:
                 Contrasenias = {}
                 self.log("Error al leer base de datos. Iniciando vacía.")
         else:
             Contrasenias = {}
-            self.log("No se encontró base de datos. Se creará una nueva al guardar.")
+            self.log("No se encontró base de datos de contraseñas.")
+        
+        # Cargar hashes
+        if os.path.exists(HASHES_FILE):
+            try:
+                with open(HASHES_FILE, "r") as archivo:
+                    Hashes = json.load(archivo)
+                self.log("Base de datos de hashes cargada correctamente.")
+            except json.JSONDecodeError:
+                Hashes = {}
+                self.log("Error al leer base de hashes. Iniciando vacía.")
+        else:
+            Hashes = {}
+            self.log("No se encontró base de datos de hashes.")
 
     def guardar_datos(self):
-        """Guarda los datos en el archivo JSON"""
-        global Contrasenias
+        """Guarda los datos en los archivos JSON"""
+        global Contrasenias, Hashes
         self.log("="*60)
         self.log("INICIANDO SECUENCIA DE GUARDADO DE DATOS")
         self.log("="*60)
+        
+        # Guardar contraseñas
         self.log("ACCEDIENDO AL SISTEMA DE ARCHIVOS...")
-        self.log(f"RUTA DE ARCHIVO: contrasenias.json")
+        self.log(f"RUTA DE ARCHIVO: {CONTRASENIAS_FILE}")
         self.log(f"TOTAL DE CONTRASEÑAS A GUARDAR: {len(Contrasenias)}")
         try:
             self.log("ABRIENDO FLUJO DE ESCRITURA...")
-            with open("contrasenias.json", "w") as f:
+            with open(CONTRASENIAS_FILE, "w") as f:
                 self.log("SERIALIZANDO DATOS A FORMATO JSON...")
                 self.log("APLICANDO FORMATO DE INDENTACIÓN (4 ESPACIOS)...")
                 json.dump(Contrasenias, f, indent=4)
                 self.log(f"BYTES ESCRITOS: {len(json.dumps(Contrasenias, indent=4))}")
             self.log("ESCRITURA EN DISCO COMPLETADA EXITOSAMENTE.")
-            self.log("CERRANDO FLUJO DE ARCHIVO...")
-            self.log("VERIFICANDO INTEGRIDAD DE DATOS...")
-            self.log("✓ DATOS GUARDADOS CORRECTAMENTE")
+            self.log("✓ CONTRASEÑAS GUARDADAS CORRECTAMENTE")
+        except Exception as e:
+            self.set_ascii_error()
+            self.log(f"¡¡¡ERROR CRÍTICO DE E/S EN CONTRASEÑAS!!!")
+            self.log(f"TIPO DE ERROR: {type(e).__name__}")
+            self.log(f"MENSAJE: {str(e)}")
+        
+        # Guardar hashes
+        self.log(f"\nRUTA DE ARCHIVO: {HASHES_FILE}")
+        self.log(f"TOTAL DE HASHES A GUARDAR: {len(Hashes)}")
+        try:
+            with open(HASHES_FILE, "w") as f:
+                json.dump(Hashes, f, indent=4)
+                self.log(f"BYTES ESCRITOS: {len(json.dumps(Hashes, indent=4))}")
+            self.log("✓ HASHES GUARDADOS CORRECTAMENTE")
             self.log("="*60)
             self.set_ascii_ok()
         except Exception as e:
             self.set_ascii_error()
-            self.log("="*60)
-            self.log(f"¡¡¡ERROR CRÍTICO DE E/S!!!")
+            self.log(f"¡¡¡ERROR CRÍTICO DE E/S EN HASHES!!!")
             self.log(f"TIPO DE ERROR: {type(e).__name__}")
             self.log(f"MENSAJE: {str(e)}")
             self.log("="*60)
@@ -362,27 +395,20 @@ class ProyectoFinal:
         self.log("  • Puerto 80: ABIERTO")
         self.log("  • Puerto 443: ABIERTO")
         self.log("  • Puerto 8080: ABIERTO")
-        self.log("\nINTENTANDO BYPASS DE AUTENTICACIÓN...")
+        self.log("\nCuenta de EDSON IVAN RUBIO GONZALEZ encontrada...")
         self.log("  • Método 1: SQL Injection... FALLÓ")
         self.log("  • Método 2: XSS Attack... FALLÓ")
-        self.log("  • Método 3: Buffer Overflow... FALLÓ")
+        self.log("  • Método 3: Buffer Overflow... EXITO")
         self.log("\nEJECUTANDO EXPLOIT SQL INJECTION...")
         self.log("  • SELECT * FROM usuarios WHERE...")
         self.log("  • ' OR '1'='1' --")
         self.log("\nACCEDIENDO A BASE DE DATOS...")
         self.log("="*60)
-        self.log("███╗   ██╗ ██████╗ ")
-        self.log("████╗  ██║██╔═══██╗")
-        self.log("██╔██╗ ██║██║   ██║")
-        self.log("██║╚██╗██║██║   ██║")
-        self.log("██║ ╚████║╚██████╔╝")
-        self.log("╚═╝  ╚═══╝ ╚═════╝ ")
         self.log("="*60)
-        self.log("ACCESO DENEGADO. FIREWALL ACTIVADO.")
         self.log("")
-        self.log("Seguro? depositame 5000 pesos y te paso el programa")
+        self.log("CALIFICACION EDITADA CON ÉXITO A 0.0")
         self.log("="*60)
-        messagebox.showwarning("SIIAU Hacker Pro", "Seguro? depositame 5000 pesos y te paso el programa")
+        messagebox.showwarning("SIIAU Hack", "Quieres cambiar libremente la calificacion? depositame 0.01 BTC a la siguiente direccion:\n1HckjUpRGcrrRAtFaaCAUaGjsPx9oYmLaZ")
         # Volver al arte principal después de 5 segundos
         self.root.after(10000, self.set_ascii_main)
 
@@ -392,9 +418,9 @@ class ProyectoFinal:
         self.log("FINALIZANDO SESIÓN...")
         self.log("="*60)
         self.log("LIMPIANDO MEMORIA...")
-        self.log("  • Borrando variables temporales...")
-        self.log("  • Liberando recursos...")
-        self.log("\nCERRANDO PUERTOS...")
+        self.log("  • Buscando donde esta Rubio...")
+        self.log("  • Jugando Counter...")
+        self.log("\nCuenta de STEAM \"Papoi\" encontrada...")
         self.log("  • Puerto 8080: CERRADO")
         self.log("  • Puerto 443: CERRADO")
         self.log("  • Puerto 80: CERRADO")
@@ -419,52 +445,62 @@ class ProyectoFinal:
     # --- Opciones ---
 
     def opcion_1(self):
+        inicio_tiempo = time.time()
         self.log("="*60)
         self.log("VERIFICACIÓN DE ARCHIVO DE BASE DE DATOS")
         self.log("="*60)
-        self.log("ARCHIVO A VERIFICAR: contrasenias.json")
-        self.log("RUTA ACTUAL: " + os.getcwd())
+        self.log("ARCHIVO A VERIFICAR: contrasenias.json y hashes.json")
+        self.log("RUTA BASE: " + SCRIPT_DIR)
         self.log("\nINICIANDO ESCANEO DEL SISTEMA DE ARCHIVOS...")
         
-        if os.path.exists("contrasenias.json"):
-            file_size = os.path.getsize("contrasenias.json")
+        # Verificar contrasenias.json
+        if os.path.exists(CONTRASENIAS_FILE):
+            file_size = os.path.getsize(CONTRASENIAS_FILE)
             self.log("✓ ARCHIVO ENCONTRADO: contrasenias.json")
             self.log(f"  • Tamaño: {file_size} bytes ({file_size/1024:.2f} KB)")
-            self.log(f"  • Ruta completa: {os.path.abspath('contrasenias.json')}")
+            self.log(f"  • Ruta completa: {CONTRASENIAS_FILE}")
             
             try:
-                with open("contrasenias.json", "r") as f:
+                with open(CONTRASENIAS_FILE, "r") as f:
                     data = json.load(f)
                     self.log(f"  • Registros en DB: {len(data)}")
                     self.log(f"  • Formato: JSON válido ✓")
-                    
-                    hasheadas = sum(1 for v in data.values() if len(v) == 64)
-                    texto_plano = len(data) - hasheadas
-                    
-                    self.log(f"  • Contraseñas hasheadas: {hasheadas}")
-                    self.log(f"  • Contraseñas en texto plano: {texto_plano}")
             except Exception as e:
                 self.log(f"  ⚠ ERROR AL LEER CONTENIDO: {str(e)}")
-            
-            self.log("\n" + "="*60)
-            self.log("VEREDICTO: BASE DE DATOS OPERATIVA ✓")
-            self.log("="*60)
-            self.set_ascii_ok()
         else:
-            self.log("✗ ARCHIVO NO ENCONTRADO")
-            self.log("  • Estado: No existe base de datos")
-            self.log("  • Acción requerida: Se creará al guardar contraseñas")
-            self.log("\n" + "="*60)
-            self.log("VEREDICTO: BASE DE DATOS NO INICIALIZADA")
-            self.log("="*60)
-            self.set_ascii_error()
+            self.log("✗ ARCHIVO NO ENCONTRADO: contrasenias.json")
+        
+        # Verificar hashes.json
+        if os.path.exists(HASHES_FILE):
+            file_size = os.path.getsize(HASHES_FILE)
+            self.log("\n✓ ARCHIVO ENCONTRADO: hashes.json")
+            self.log(f"  • Tamaño: {file_size} bytes ({file_size/1024:.2f} KB)")
+            self.log(f"  • Ruta completa: {HASHES_FILE}")
+            
+            try:
+                with open(HASHES_FILE, "r") as f:
+                    data = json.load(f)
+                    self.log(f"  • Hashes en DB: {len(data)}")
+                    self.log(f"  • Formato: JSON válido ✓")
+            except Exception as e:
+                self.log(f"  ⚠ ERROR AL LEER CONTENIDO: {str(e)}")
+        else:
+            self.log("\n✗ ARCHIVO NO ENCONTRADO: hashes.json")
+        
+        tiempo_transcurrido = time.time() - inicio_tiempo
+        self.log("\n" + "="*60)
+        self.log(f"TIEMPO DE EJECUCIÓN: {tiempo_transcurrido:.2f} segundos")
+        self.log("VEREDICTO: VERIFICACIÓN COMPLETADA")
+        self.log("="*60)
+        self.set_ascii_ok()
 
     def opcion_2(self):
         contra = simpledialog.askstring("Buscar", "Ingrese la contraseña a buscar:")
         if not contra: 
             return
         
-        global Contrasenias
+        inicio_tiempo = time.time()
+        global Contrasenias, Hashes
         self.log("="*60)
         self.log("INICIANDO BÚSQUEDA DE CONTRASEÑA EN BASE DE DATOS")
         self.log("="*60)
@@ -476,37 +512,53 @@ class ProyectoFinal:
         hash_hex = hash_obj.hexdigest()
         
         self.log(f"HASH GENERADO: {hash_hex}")
-        self.log(f"\nBUSCANDO EN {len(Contrasenias)} REGISTROS...")
+        self.log(f"\nBUSCANDO EN {len(Contrasenias)} CONTRASEÑAS Y {len(Hashes)} HASHES...")
         
-        encontrada = False
+        encontrada_contra = False
+        encontrada_hash = False
         key_encontrada = None
         
+        # Buscar en contraseñas
         for key, value in Contrasenias.items():
-            if value == hash_hex:
-                encontrada = True
+            if value == contra:
+                encontrada_contra = True
                 key_encontrada = key
                 break
         
+        # Buscar en hashes
+        for key, value in Hashes.items():
+            if value == hash_hex:
+                encontrada_hash = True
+                if not key_encontrada:
+                    key_encontrada = key
+                break
+        
+        tiempo_transcurrido = time.time() - inicio_tiempo
         self.log("="*60)
-        if encontrada:
+        if encontrada_contra or encontrada_hash:
             self.log("✓✓✓ RESULTADO: CONTRASEÑA ENCONTRADA ✓✓✓")
             self.log(f"KEY: {key_encontrada}")
+            if encontrada_contra:
+                self.log("UBICACIÓN: Base de datos de contraseñas (texto plano)")
+            if encontrada_hash:
+                self.log("UBICACIÓN: Base de datos de hashes (SHA-256)")
             self.log(f"HASH: {hash_hex}")
-            self.log("ESTADO: La contraseña existe en la base de datos (Hasheada)")
             self.set_ascii_ok()
         else:
             self.log("✗✗✗ RESULTADO: CONTRASEÑA NO ENCONTRADA ✗✗✗")
-            self.log("ESTADO: La contraseña NO existe en la base de datos")
+            self.log("ESTADO: La contraseña NO existe en ninguna base de datos")
             self.log(f"HASH BUSCADO: {hash_hex}")
             self.log("SUGERENCIA: La contraseña puede ser nueva o nunca fue agregada")
             self.set_ascii_error()
+        self.log(f"TIEMPO DE EJECUCIÓN: {tiempo_transcurrido:.2f} segundos")
         self.log("="*60)
 
     def opcion_3(self):
         threading.Thread(target=self._opcion_3_thread).start()
 
     def _opcion_3_thread(self):
-        global Contrasenias
+        inicio_tiempo = time.time()
+        global Contrasenias, Hashes
         self.log("="*60)
         self.log("INICIANDO PROCESO DE HASHEO MASIVO CON SHA-256")
         self.log("="*60)
@@ -523,7 +575,6 @@ class ProyectoFinal:
         
         count = 0
         hasheadas = 0
-        ya_hasheadas = 0
         
         for key in list(Contrasenias.keys()):
             valor = Contrasenias[key]
@@ -531,34 +582,29 @@ class ProyectoFinal:
             self.log(f"    Valor actual: {valor[:20]}{'...' if len(valor) > 20 else ''}")
             self.log(f"    Longitud: {len(valor)} caracteres")
             
-            if len(valor) != 64:  # Longitud de SHA256 hex
-                self.log("    STATUS: Contraseña en texto plano detectada")
-                self.log("    ACCIÓN: Aplicando hash SHA-256...")
-                self.log(f"    ORIGINAL: {valor}")
-                
-                hash_obj = hashlib.sha256(valor.encode())
-                hash_hex = hash_obj.hexdigest()
-                Contrasenias[key] = hash_hex
-                
-                self.log(f"    HASH: {hash_hex}")
-                self.log("    ✓ HASHEADO EXITOSAMENTE")
-                cambios = True
-                hasheadas += 1
-            else:
-                self.log("    STATUS: Ya está hasheada (64 chars detectados)")
-                self.log("    ACCIÓN: Omitiendo...")
-                ya_hasheadas += 1
+            self.log("    STATUS: Contraseña en texto plano")
+            self.log("    ACCIÓN: Aplicando hash SHA-256...")
+            self.log(f"    ORIGINAL: {valor}")
+            
+            hash_obj = hashlib.sha256(valor.encode())
+            hash_hex = hash_obj.hexdigest()
+            Hashes[key] = hash_hex
+            
+            self.log(f"    HASH: {hash_hex}")
+            self.log("    ✓ HASHEADO EXITOSAMENTE Y GUARDADO EN hashes.json")
+            cambios = True
+            hasheadas += 1
             
             count += 1
             self.progress["value"] = count
             time.sleep(0.03)
         
+        tiempo_transcurrido = time.time() - inicio_tiempo
         self.log("\n" + "="*60)
         self.log("RESUMEN DEL PROCESO DE HASHEO")
         self.log("="*60)
         self.log(f"TOTAL PROCESADAS: {count}")
         self.log(f"NUEVAS HASHEADAS: {hasheadas}")
-        self.log(f"YA ESTABAN HASHEADAS: {ya_hasheadas}")
         
         if cambios:
             self.log("\nCAMBIOS DETECTADOS - GUARDANDO EN BASE DE DATOS...")
@@ -566,8 +612,9 @@ class ProyectoFinal:
             self.log("✓ PROCESO COMPLETADO: Todas las contraseñas han sido hasheadas.")
             self.set_ascii_ok()
         else:
-            self.log("✓ ESTADO: Todas las contraseñas ya estaban hasheadas.")
+            self.log("✓ ESTADO: No había contraseñas para hashear.")
         
+        self.log(f"TIEMPO DE EJECUCIÓN: {tiempo_transcurrido:.2f} segundos")
         self.log("="*60)
         self.progress["value"] = 0
 
@@ -623,6 +670,7 @@ class ProyectoFinal:
             messagebox.showerror("Error", "Por favor ingrese números válidos")
 
     def _opcion_4_thread(self, cantidad):
+        inicio_tiempo = time.time()
         global Contrasenias
         self.log("="*60)
         self.log("INICIANDO GENERADOR DE CONTRASEÑAS SEGURAS")
@@ -660,20 +708,23 @@ class ProyectoFinal:
             self.progress["value"] = i + 1
             time.sleep(0.02)
         
+        tiempo_transcurrido = time.time() - inicio_tiempo
         self.log("\n" + "="*60)
         self.log("PROCESO DE GENERACIÓN COMPLETADO")
         self.log("="*60)
         self.guardar_datos()
         self.log(f"✓ {cantidad} CONTRASEÑAS GENERADAS Y ALMACENADAS")
+        self.log(f"TIEMPO DE EJECUCIÓN: {tiempo_transcurrido:.2f} segundos")
         self.progress["value"] = 0
         
         # Preguntar si hashear (usando messagebox en el hilo principal)
         self.root.after(0, lambda: self._preguntar_hashear(nuevas_keys))
 
     def _preguntar_hashear(self, keys):
-        global Contrasenias
+        global Contrasenias, Hashes
         respuesta = messagebox.askyesno("Hashear", "¿Desea hashear las nuevas contraseñas inmediatamente?")
         if respuesta:
+            inicio_tiempo = time.time()
             self.log("\n" + "="*60)
             self.log("INICIANDO HASHEO DE CONTRASEÑAS NUEVAS")
             self.log("="*60)
@@ -687,14 +738,16 @@ class ProyectoFinal:
                 
                 hash_obj = hashlib.sha256(valor.encode())
                 hash_hex = hash_obj.hexdigest()
-                Contrasenias[key] = hash_hex
+                Hashes[key] = hash_hex
                 
                 self.log(f"    HASH GENERADO: {hash_hex}")
                 self.log(f"    ✓ COMPLETADO")
             
+            tiempo_transcurrido = time.time() - inicio_tiempo
             self.log("\n>>> GUARDANDO HASHES EN BASE DE DATOS...")
             self.guardar_datos()
             self.log("✓ TODAS LAS CONTRASEÑAS NUEVAS HAN SIDO HASHEADAS")
+            self.log(f"TIEMPO DE EJECUCIÓN: {tiempo_transcurrido:.2f} segundos")
             self.log("="*60)
 
     def opcion_5(self):
@@ -702,6 +755,7 @@ class ProyectoFinal:
         if not contra: 
             return
         
+        inicio_tiempo = time.time()
         self.log("="*60)
         self.log("ANÁLISIS DE SEGURIDAD DE CONTRASEÑA")
         self.log("="*60)
@@ -720,9 +774,11 @@ class ProyectoFinal:
         self.log(f"  ✓ Números: {'SÍ ✓' if tiene_num else 'NO ✗'} ({sum(1 for c in contra if c.isdigit())} encontrados)")
         self.log(f"  ✓ Símbolos: {'SÍ ✓' if tiene_raro else 'NO ✗'} ({sum(1 for c in contra if c in Caracteres)} encontrados)")
         
+        tiempo_transcurrido = time.time() - inicio_tiempo
         if len(contra) >= 9 and tiene_minus and tiene_mayus and tiene_raro and tiene_num:
             self.log("\n" + "="*60)
             self.log("VEREDICTO: ✓✓✓ CONTRASEÑA SEGURA ✓✓✓")
+            self.log(f"TIEMPO DE EJECUCIÓN: {tiempo_transcurrido:.2f} segundos")
             self.log("="*60)
             self.set_ascii_ok()
         else:
@@ -740,12 +796,14 @@ class ProyectoFinal:
                 self.log("  • Agregar números (0-9)")
             if not tiene_raro:
                 self.log("  • Agregar símbolos especiales (!@#$%^&*...)")
+            self.log(f"TIEMPO DE EJECUCIÓN: {tiempo_transcurrido:.2f} segundos")
             self.set_ascii_error()
 
     def opcion_6(self):
         threading.Thread(target=self._opcion_6_thread).start()
 
     def _opcion_6_thread(self):
+        inicio_tiempo = time.time()
         global Contrasenias
         self.log("="*60)
         self.log("INICIANDO ANÁLISIS DE SEGURIDAD Y LIMPIEZA")
@@ -765,37 +823,31 @@ class ProyectoFinal:
         for key, contra in Contrasenias.items():
             self.log(f"\n>>> ANALIZANDO: {key}")
             self.log(f"    Longitud: {len(contra)} caracteres")
+            self.log(f"    Valor: {contra}")
             
-            # Solo analizamos las que no parecen hashes
-            if len(contra) != 64:
-                self.log("    Tipo: TEXTO PLANO")
-                self.log(f"    Valor: {contra}")
-                
-                tiene_minus = any(c.islower() for c in contra)
-                tiene_mayus = any(c.isupper() for c in contra)
-                tiene_raro = any(c in Caracteres for c in contra)
-                tiene_num = any(c.isdigit() for c in contra)
-                
-                self.log(f"    ✓ Minúsculas: {'SÍ' if tiene_minus else 'NO'}")
-                self.log(f"    ✓ Mayúsculas: {'SÍ' if tiene_mayus else 'NO'}")
-                self.log(f"    ✓ Números: {'SÍ' if tiene_num else 'NO'}")
-                self.log(f"    ✓ Símbolos: {'SÍ' if tiene_raro else 'NO'}")
-                
-                es_segura = len(contra) >= 9 and tiene_minus and tiene_mayus and tiene_raro and tiene_num
-                
-                if not es_segura:
-                    llaves_a_borrar.append(key)
-                    self.log(f"    ⚠ VEREDICTO: INSEGURA - MARCADA PARA ELIMINACIÓN")
-                else:
-                    self.log(f"    ✓ VEREDICTO: SEGURA")
+            tiene_minus = any(c.islower() for c in contra)
+            tiene_mayus = any(c.isupper() for c in contra)
+            tiene_raro = any(c in Caracteres for c in contra)
+            tiene_num = any(c.isdigit() for c in contra)
+            
+            self.log(f"    ✓ Minúsculas: {'SÍ' if tiene_minus else 'NO'}")
+            self.log(f"    ✓ Mayúsculas: {'SÍ' if tiene_mayus else 'NO'}")
+            self.log(f"    ✓ Números: {'SÍ' if tiene_num else 'NO'}")
+            self.log(f"    ✓ Símbolos: {'SÍ' if tiene_raro else 'NO'}")
+            
+            es_segura = len(contra) >= 9 and tiene_minus and tiene_mayus and tiene_raro and tiene_num
+            
+            if not es_segura:
+                llaves_a_borrar.append(key)
+                self.log(f"    ⚠ VEREDICTO: INSEGURA - MARCADA PARA ELIMINACIÓN")
             else:
-                self.log("    Tipo: HASH (64 caracteres)")
-                self.log("    ✓ VEREDICTO: HASH VÁLIDO - NO SE PUEDE ANALIZAR")
+                self.log(f"    ✓ VEREDICTO: SEGURA")
             
             count += 1
             self.progress["value"] = count
             time.sleep(0.02)
         
+        tiempo_transcurrido = time.time() - inicio_tiempo
         self.log("\n" + "="*60)
         self.log("RESUMEN DEL ANÁLISIS DE SEGURIDAD")
         self.log("="*60)
@@ -813,9 +865,9 @@ class ProyectoFinal:
             self.set_ascii_ok()
         else:
             self.log("✓ LIMPIEZA: No se encontraron contraseñas inseguras.")
-            self.log("    Todas las contraseñas cumplen con los estándares de seguridad")
-            self.log("    o están hasheadas.")
+            self.log("    Todas las contraseñas cumplen con los estándares de seguridad.")
         
+        self.log(f"TIEMPO DE EJECUCIÓN: {tiempo_transcurrido:.2f} segundos")
         self.log("="*60)
         self.progress["value"] = 0
 

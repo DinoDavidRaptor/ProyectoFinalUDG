@@ -1,97 +1,282 @@
-<h1>Proyecto Final de Gestión y Seguridad de Contraseñas</h1>
+<div align="center">
 
-Este programa es una aplicación de escritorio creada con Python y Tkinter que funciona como un sistema completo para gestionar, generar, verificar y almacenar contraseñas. Incluye una consola visual interna, múltiples herramientas de seguridad, animaciones en ASCII y un diseño tipo terminal con estilo retro.
+# Gestor de Contraseñas - Proyecto Final
 
-La aplicación organiza su interfaz en dos columnas, de modo que la parte izquierda contiene toda la funcionalidad principal y la derecha muestra arte ASCII animado que cambia según la acción realizada.
+### Proyecto Final Programación I
 
-*Características principales
-*Interfaz gráfica estilo terminal.
-*Animación de arte ASCII en tiempo real.
-*Múltiples herramientas de gestión de contraseñas.
-*Sistema de almacenamiento basado en JSON.
-*Consola integrada que registra cada acción.
-*Barra de progreso para tareas largas.
-*Función humorística llamada “Hackear SIIAU”.
-*Mecanismo de cierre animado.
+![Python](https://img.shields.io/badge/Python-3.14-blue?style=for-the-badge&logo=python&logoColor=white)
+![Tkinter](https://img.shields.io/badge/Tkinter-GUI-green?style=for-the-badge&logo=python&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Activo-success?style=for-the-badge)
+![License](https://img.shields.io/badge/License-Escolar-orange?style=for-the-badge)
 
-<h2>Flujo general del programa</h2>
+</div>
 
-1. Inicio
-Al ejecutarse el archivo, se crea la ventana principal y se configuran todos los estilos.
-Se cargan o inicializan los datos almacenados en contrasenias.json.
+---
 
-2. Animación inicial
-El programa muestra una animación ASCII cíclica usando un sistema de actualización programada mediante la función after de Tkinter.
+## Descripción
 
-3. Menú de funciones
-Se muestran botones numerados que representan las acciones del sistema.
-El usuario interactúa con ellos y cada uno ejecuta una tarea distinta.
+Sistema completo de **gestión y seguridad de contraseñas** con interfaz gráfica estilo terminal retro. Este proyecto combina funcionalidad profesional con una estética console que incluye animaciones ASCII, consola integrada y un diseño visual tipo Matrix.
 
-4. Registro en consola
-Cada proceso escribe mensajes en la consola interna para dar retroalimentación detallada.
+> **Proyecto escolar desarrollado para la clase de Programación I en CUCGDL**
 
-5. Guardado de datos
-El sistema guarda cualquier cambio realizado en un archivo JSON.
-Antes y después del guardado, se registran múltiples pasos para monitorear el proceso.
+### Características Principales
 
-6. Cierre del sistema
-La aplicación muestra arte ASCII de despedida, simula limpieza de recursos y cierra la ventana después de unos segundos.
+- **Interfaz estilo terminal** con tema verde neón sobre fondo negro
+- **Animaciones ASCII** que cambian según el contexto
+- **Hash de contraseñas** usando SHA-256
+- **Generador de contraseñas** aleatorias y seguras
+- **Verificación de seguridad** de contraseñas
+- **Sistema de almacenamiento dual** basado en JSON (contraseñas y hashes separados)
+- **Consola integrada** con registro detallado de operaciones
+- **Cronómetro de tiempo** para cada operación en segundos
+- **Rutas absolutas** basadas en la ubicación del script
+- **Barra de progreso** para operaciones largas
+- **Easter Egg:** Función "Hackear SIIAU" (totalmente inofensiva)
 
-<h2>Funciones incluidas en el código</h2>
+---
 
-<h5>Manejo visual y estético
+## Equipo de Desarrollo
 
-animate_ascii
-Controla el cambio automático del arte ASCII.
+<table align="center">
+  <tr>
+    <td><b>David Padilla Ruiz</b></td>
+  </tr>
+  <tr>
+    <td><b>Juan Pablo Conde Espinosa</b></td>
+  </tr>
+  <tr>
+    <td><b>Rogelio Abdiel Vazquez Pintor</b></td>
+  </tr>
+  <tr>
+    <td><b>Edson Ivan Rubio Gonzalez</b></td>
+  </tr>
+</table>
 
-set_ascii_main, set_ascii_ok, set_ascii_error, set_ascii_exit, set_ascii_hackear_siiau
-Cambian el tipo de animación según el evento.
+---
 
-log(mensaje)
-Escribe texto en la consola integrada.
+## Instalación y Uso
 
-Manejo de almacenamiento
+### Prerrequisitos
 
-cargar_datos
-Carga las contraseñas desde el archivo JSON, valida errores y asigna valores por defecto cuando es necesario.
+```bash
+Python 3.14 o superior
+Tkinter (incluido en la mayoría de instalaciones de Python)
+```
 
-guardar_datos
-Guarda la base de contraseñas con formato legible.
-Documenta cada etapa en la consola.
+### Instalación
 
-guardar_contrasenas
-Alias directo a la función anterior.
+1. **Clona el repositorio:**
 
-Funciones del menú principal</h5>
+```bash
+git clone https://github.com/DinoDavidRaptor/ProyectoFinalUDG.git
+cd ProyectoFinalUDG
+```
 
-<h2>El proyecto tiene botones que llaman a las siguientes funciones:</h2>
+2. **Ejecuta el programa:**
 
-<h3>opcion_1</h3>
-Verifica el archivo JSON.
+```bash
+python hashes.py
+```
 
-<h3>opcion_2</h3>
-Busca una contraseña usando su hash.
+---
 
-<h3>opcion_3</h3>
-Hashea todas las contraseñas almacenadas.
+## Funcionalidades
 
-<h3>opcion_4</h3>
-Genera contraseñas nuevas con parámetros específicos.
+<table>
+  <tr>
+    <th>Opción</th>
+    <th>Descripción</th>
+  </tr>
+  <tr>
+    <td><b>Verificar Archivo JSON</b></td>
+    <td>Valida y muestra el contenido del archivo de contraseñas</td>
+  </tr>
+  <tr>
+    <td><b>Buscar Contraseña</b></td>
+    <td>Busca contraseñas por su hash SHA-256</td>
+  </tr>
+  <tr>
+    <td><b>Hashear Todo</b></td>
+    <td>Genera hashes de todas las contraseñas almacenadas</td>
+  </tr>
+  <tr>
+    <td><b>Generar Contraseñas</b></td>
+    <td>Crea contraseñas aleatorias seguras</td>
+  </tr>
+  <tr>
+    <td><b>Verificar Seguridad</b></td>
+    <td>Analiza la fortaleza de las contraseñas almacenadas</td>
+  </tr>
+  <tr>
+    <td><b>Eliminar Inseguras</b></td>
+    <td>Remueve contraseñas que no cumplan estándares de seguridad</td>
+  </tr>
+  <tr>
+    <td><b>Hackear SIIAU</b></td>
+    <td>Easter egg con animación especial (100% inofensivo)</td>
+  </tr>
+</table>
 
-<h3>opcion_5</h3>
-Verifica si una contraseña es segura.
+---
 
-<h3>opcion_6</h3>
-Elimina contraseñas considerados inseguras.
+## Tecnologías Utilizadas
 
-<h3>hackear_siiau</h3>
-Simulación humorística de ataque con mensajes y ASCII.
+<div align="center">
 
-<h3>salir</h3>
-Limpia recursos y cierra la aplicación.
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Tkinter](https://img.shields.io/badge/Tkinter-FF6B6B?style=for-the-badge)
+![JSON](https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white)
+![Hashlib](https://img.shields.io/badge/Hashlib-4B8BBE?style=for-the-badge)
+![Threading](https://img.shields.io/badge/Threading-306998?style=for-the-badge)
 
-<h2>Requisitos</h2>
+</div>
 
-1. Python 3.8 o superior
-2. Biblioteca estándar de Python
-(se usa Tkinter, json, os, hashlib, random, threading, etc.)
+### Bibliotecas Principales
+
+- **tkinter** - Interfaz gráfica
+- **hashlib** - Funciones de hash criptográfico
+- **json** - Manejo de datos
+- **threading** - Operaciones asíncronas
+- **random** & **string** - Generación de contraseñas
+
+---
+
+## Algoritmos de Hash Soportados
+
+
+| Algoritmo | Bits | Uso                 |
+| --------- | ---- | ------------------- |
+| SHA-256   | 256  | Seguridad estándar |
+
+---
+
+## Criterios de Seguridad
+
+El sistema evalúa contraseñas basándose en:
+
+- Longitud mínima de 8 caracteres
+- Presencia de letras mayúsculas y minúsculas
+- Inclusión de números
+- Caracteres especiales
+- Variedad de tipos de caracteres
+
+---
+
+## Estructura del Proyecto
+
+```
+ProyectoFinalUDG/
+│
+├── hashes.py              # Archivo principal del programa
+├── contrasenias.json      # Base de datos de contraseñas (texto plano)
+├── hashes.json            # Base de datos de hashes SHA-256
+└── README.md              # Este archivo
+```
+
+### Sistema de Archivos Dual
+
+El proyecto utiliza dos archivos JSON separados:
+
+- **contrasenias.json**: Almacena las contraseñas en texto plano para facilitar su gestión
+- **hashes.json**: Almacena los hashes SHA-256 de las contraseñas para mayor seguridad
+
+Las rutas de los archivos son absolutas y se basan en la ubicación del script, no en el directorio de ejecución.
+
+---
+
+## Características Técnicas
+
+### Cronometraje de Operaciones
+
+Cada función del sistema mide y reporta el tiempo de ejecución en segundos:
+
+- **Verificación de archivos**: Tiempo de lectura y validación
+- **Búsqueda de contraseñas**: Tiempo de búsqueda en ambas bases de datos
+- **Hasheo masivo**: Tiempo total de procesamiento de todas las contraseñas
+- **Generación de contraseñas**: Tiempo de creación y almacenamiento
+- **Análisis de seguridad**: Tiempo de evaluación de criterios
+- **Limpieza de contraseñas inseguras**: Tiempo de análisis y eliminación
+
+Los cronómetros **NO** incluyen el tiempo de espera de inputs del usuario, solo miden el tiempo de procesamiento real.
+
+### Gestión de Rutas
+
+El sistema utiliza rutas absolutas calculadas desde la ubicación del script:
+
+```python
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CONTRASENIAS_FILE = os.path.join(SCRIPT_DIR, "contrasenias.json")
+HASHES_FILE = os.path.join(SCRIPT_DIR, "hashes.json")
+```
+
+Esto garantiza que los archivos JSON siempre se crean en el mismo directorio que el script, independientemente desde dónde se ejecute el programa.
+
+---
+
+## Estructura UI
+
+### Panel Principal
+
+El sistema presenta una interfaz dividida en dos columnas:
+
+- **Izquierda:** Botones de funcionalidad y consola de comandos
+- **Derecha:** Arte ASCII animado que responde al contexto
+
+### Consola Integrada
+
+Cada operación se registra en tiempo real con:
+
+- Mensajes de éxito en verde (Demasiados, le da un toque de consola)
+- Errores claramente identificados
+- Timestamps y progreso de operaciones
+
+---
+
+## Disclaimer
+
+> **Nota Importante:** Este es un proyecto con fines educativos desarrollado para la clase de Programación I en CUCGDL. No debe utilizarse para almacenar contraseñas reales en entornos de producción. La función "Hackear SIIAU" es completamente ficticia y no realiza ninguna acción maliciosa.
+
+---
+
+## Institución
+
+**Centro Universitario de Guadalajara - Universidad de Guadalajara**
+Curso: Programación I
+Semestre: 2025 - B
+
+---
+
+## Licencia
+
+Este proyecto es de uso educativo. Desarrollado como proyecto final de la materia de Programación I.
+
+---
+
+<div align="center">
+
+### Si te gustó el proyecto, no dudes en depositarme $5,000 pesos para mis vicios
+
+**Hecho por:**
+
+- David Padilla Ruiz
+- Juan Pablo Conde Espinosa
+- Rogelio Abdiel Vazquez Pintor
+- Edson Ivan Rubio Gonzalez
+
+```
+╔═══════════════════════════════════════════════════════╗
+║              "Vibecodeando el semestre"               ║
+║                                            - Dino     ║
+╚═══════════════════════════════════════════════════════╝
+```
+
+---
+
+[![GitHub](https://img.shields.io/badge/GitHub-DinoDavidRaptor-181717?style=for-the-badge&logo=github)](https://github.com/DinoDavidRaptor)
+
+[![GitHub](https://img.shields.io/badge/GitHub-Drg025-181717?style=for-the-badge&logo=github)](https://github.com/Drg025)
+
+
+[![UDG](https://img.shields.io/badge/UDG-CUCGDL-004B87?style=for-the-badge)](http://www.cucgdl.udg.mx/)
+
+</div>
