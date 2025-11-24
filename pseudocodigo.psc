@@ -1,7 +1,6 @@
 // ==========================================
 // GESTOR DE CONTRASENAS CON HASH SHA-256
 // Sistema de Gestion de Contrasenas con Interfaz Grafica
-// Pseudocodigo para PSeInt
 // ==========================================
 
 Algoritmo GestorContrasenasProyectoFinal
