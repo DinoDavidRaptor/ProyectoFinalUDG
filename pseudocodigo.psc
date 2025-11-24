@@ -351,11 +351,21 @@ Funcion contrasenia <- GenerarContraseniaSegura(Letras, Caracteres)
 	longitud <- 9
 	todoJunto <- Concatenar(Letras, Caracteres)
 	todoJunto <- Concatenar(todoJunto, "0123456789")
+	largo <- 0
+	
+	// Calcular longitud de todoJunto manualmente
+	Para i <- 1 Hasta 200 Hacer
+		Si Subcadena(todoJunto, i, i) <> "" Entonces
+			largo <- i
+		SiNo
+			i <- 201
+		FinSi
+	FinPara
+	
 	valida <- Falso
 	
 	Mientras NO valida Hacer
 		contrasenia <- ""
-		largo <- Longitud(todoJunto)
 		Para i <- 1 Hasta longitud Hacer
 			indice <- Aleatorio(1, largo)
 			contrasenia <- Concatenar(contrasenia, Subcadena(todoJunto, indice, indice))
