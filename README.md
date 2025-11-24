@@ -38,7 +38,8 @@ Antes y después del guardado, se registran múltiples pasos para monitorear el 
 La aplicación muestra arte ASCII de despedida, simula limpieza de recursos y cierra la ventana después de unos segundos.
 
 <h2>Funciones incluidas en el código</h2>
-Manejo visual y estético
+
+<h5>Manejo visual y estético
 
 animate_ascii
 Controla el cambio automático del arte ASCII.
@@ -61,7 +62,7 @@ Documenta cada etapa en la consola.
 guardar_contrasenas
 Alias directo a la función anterior.
 
-Funciones del menú principal
+Funciones del menú principal</h5>
 
 <h2>El proyecto tiene botones que llaman a las siguientes funciones:</h2>
 
