@@ -36,7 +36,7 @@ Antes y después del guardado, se registran múltiples pasos para monitorear el 
 6. Cierre del sistema
 La aplicación muestra arte ASCII de despedida, simula limpieza de recursos y cierra la ventana después de unos segundos.
 
-Funciones incluidas en el código
+*Funciones incluidas en el código*
 Manejo visual y estético
 
 animate_ascii
