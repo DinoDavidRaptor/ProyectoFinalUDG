@@ -91,6 +91,7 @@ Simulación humorística de ataque con mensajes y ASCII.
 Limpia recursos y cierra la aplicación.
 
 <h2>Requisitos</h2>
--Python 3.8 o superior
--Biblioteca estándar de Python
+
+1. Python 3.8 o superior
+2. Biblioteca estándar de Python
 (se usa Tkinter, json, os, hashlib, random, threading, etc.)
