@@ -1,4 +1,4 @@
-Proyecto Final de Gestión y Seguridad de Contraseñas
+*Proyecto Final de Gestión y Seguridad de Contraseñas*
 
 Este programa es una aplicación de escritorio creada con Python y Tkinter que funciona como un sistema completo para gestionar, generar, verificar y almacenar contraseñas. Incluye una consola visual interna, múltiples herramientas de seguridad, animaciones en ASCII y un diseño tipo terminal con estilo retro.
 
@@ -62,35 +62,33 @@ Alias directo a la función anterior.
 
 Funciones del menú principal
 
-El proyecto tiene botones que llaman a las siguientes funciones:
+*El proyecto tiene botones que llaman a las siguientes funciones:*
 
-opcion_1
+-opcion_1
 Verifica el archivo JSON.
 
-opcion_2
+-opcion_2
 Busca una contraseña usando su hash.
 
-opcion_3
+-opcion_3
 Hashea todas las contraseñas almacenadas.
 
-opcion_4
+-opcion_4
 Genera contraseñas nuevas con parámetros específicos.
 
-opcion_5
+-opcion_5
 Verifica si una contraseña es segura.
 
-opcion_6
+-opcion_6
 Elimina contraseñas considerados inseguras.
 
-hackear_siiau
+-hackear_siiau
 Simulación humorística de ataque con mensajes y ASCII.
 
-salir
+-salir
 Limpia recursos y cierra la aplicación.
 
-Requisitos
-
-Python 3.8 o superior
-
-Biblioteca estándar de Python
+*Requisitos*
+-Python 3.8 o superior
+-Biblioteca estándar de Python
 (se usa Tkinter, json, os, hashlib, random, threading, etc.)
