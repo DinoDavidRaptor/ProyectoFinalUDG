@@ -14,7 +14,7 @@ La aplicación organiza su interfaz en dos columnas, de modo que la parte izquie
 *Función humorística llamada “Hackear SIIAU”.
 *Mecanismo de cierre animado.
 
-Flujo general del programa
+*Flujo general del programa*
 1. Inicio
 Al ejecutarse el archivo, se crea la ventana principal y se configuran todos los estilos.
 Se cargan o inicializan los datos almacenados en contrasenias.json.
