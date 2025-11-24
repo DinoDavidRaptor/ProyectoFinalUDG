@@ -64,28 +64,28 @@ Funciones del menú principal
 
 <h2>El proyecto tiene botones que llaman a las siguientes funciones:</h2>
 
--opcion_1
+<h3>opcion_1</h3>
 Verifica el archivo JSON.
 
--opcion_2
+<h3>opcion_2</h3>
 Busca una contraseña usando su hash.
 
--opcion_3
+<h3>opcion_3</h3>
 Hashea todas las contraseñas almacenadas.
 
--opcion_4
+<h3>opcion_4</h3>
 Genera contraseñas nuevas con parámetros específicos.
 
--opcion_5
+<h3>opcion_5</h3>
 Verifica si una contraseña es segura.
 
--opcion_6
+<h3>opcion_6</h3>
 Elimina contraseñas considerados inseguras.
 
--hackear_siiau
+<h3>hackear_siiau</h3>
 Simulación humorística de ataque con mensajes y ASCII.
 
--salir
+<h3>salir</h3>
 Limpia recursos y cierra la aplicación.
 
 <h2>Requisitos</h2>
