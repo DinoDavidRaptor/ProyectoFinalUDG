@@ -276,6 +276,7 @@ Este proyecto es de uso educativo. Desarrollado como proyecto final de la materi
 
 [![GitHub](https://img.shields.io/badge/GitHub-Drg025-181717?style=for-the-badge&logo=github)](https://github.com/Drg025)
 
+[![GitHub](https://img.shields.io/badge/https%3A%2F%2Fgithub.com%2FShogun-S4ma)](https://github.com/Shogun-S4ma)
 
 [![UDG](https://img.shields.io/badge/UDG-CUCGDL-004B87?style=for-the-badge)](http://www.cucgdl.udg.mx/)
 
